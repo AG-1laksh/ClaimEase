@@ -2,17 +2,18 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { cn } from "@/lib/cn";
 
 const links = [
   { href: "/claims/new", label: "New Claim" },
   { href: "/claims", label: "My Claims" },
 ];
 
-export default function AppNav() {
+export default function AppNav({ className }: { className?: string }) {
   const pathname = usePathname();
 
   return (
-    <nav aria-label="Main" className="flex gap-1">
+    <nav aria-label="Main" className={cn("flex gap-1 rounded-lg bg-background p-1", className)}>
       {links.map(({ href, label }) => {
         const active = pathname === href;
         return (
@@ -20,11 +21,12 @@ export default function AppNav() {
             key={href}
             href={href}
             aria-current={active ? "page" : undefined}
-            className={`rounded-md px-3 py-2 text-sm font-medium transition-colors ${
+            className={cn(
+              "flex-1 rounded-md px-4 py-1.5 text-center text-sm font-medium transition-colors sm:flex-none",
               active
-                ? "bg-foreground text-background"
-                : "text-zinc-600 hover:bg-black/[.05] dark:text-zinc-400 dark:hover:bg-white/[.08]"
-            }`}
+                ? "bg-surface text-foreground shadow-sm ring-1 ring-border"
+                : "text-muted hover:text-foreground",
+            )}
           >
             {label}
           </Link>
